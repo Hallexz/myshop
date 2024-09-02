@@ -13,9 +13,21 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('category_id');
+            $table->string('name');
+            $table->string('slug')->unique();
+            $table->text('description');
+            $table->decimal('price', 10, 2);
+            $table->integer('quantity')->default(0);
+            $table->string('sku')->nullable();
+            $table->string('image')->nullable();
+            $table->boolean('is_active')->default(true);
             $table->timestamps();
+
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
         });
     }
+    
 
     /**
      * Reverse the migrations.
